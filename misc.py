@@ -17,6 +17,19 @@ def save_pressure_results(filename: str, pressure_means: np.ndarray,pressure_std
 
 
 
+def WriteTopology(filename, numb_atoms, molecule_list, numb_types):
+    """Molecule list will be for example for a mixture of 20 atoms of N2 and 10 atoms of CH4
+    numb_atoms = 20*2 + 10*(1 + 4) = 90
+    molecule_list = [2, 1, 4]
+
+    """ 
+    for i in range(numb_atoms):
+        for j in range(molecule_list):
+
+            with open(filename, "w") as f:
+                f.writewrite("%i %i %i\n" % (i, j, k))  # atom_id, mol_id, type
+
+
 def WriteEnergy(fileenergy, itime, epot, ekin, vx2, vy2, vz2, virial, Temp):
     
     fileenergy.write("%i %e %e %e %e %e %e %e\n" % (itime, epot, ekin, vx2, vy2, vz2, virial, Temp))
