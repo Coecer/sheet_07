@@ -26,7 +26,7 @@ def InitializeAtoms():
                 if nz%2 == 0:
                     x0 = (nx+1/2) * settings.deltaxyz
                     y0 = (ny+1/2) * settings.deltaxyz
-                    z0 = (nz//2+1/2) * settings.deltaxyz -settings.bond_len/2
+                    z0 = (nz//2+1/2) * settings.deltaxyz -settings.bond_len_t0/2
                     
                     vx0 = 0.5 - random.randint(0, 1)
                     vy0 = 0.5 - random.randint(0, 1)
@@ -47,7 +47,7 @@ def InitializeAtoms():
 
                     x0 = (nx+1/2) * settings.deltaxyz
                     y0 = (ny+1/2) * settings.deltaxyz
-                    z0 = (nz//2+1/2) * settings.deltaxyz+settings.bond_len/2
+                    z0 = (nz//2+1/2) * settings.deltaxyz+settings.bond_len_t0/2
                     
                     vx0 = 0.5 - random.randint(0, 1)
                     vy0 = 0.5 - random.randint(0, 1)

@@ -27,7 +27,7 @@ from matplotlib import rcParams
 
 def init():
     global eqsteps
-    eqsteps = 10         # != 50_000
+    eqsteps = 10000         # != 50_000
     global nsteps            # number of time step to analyze
     nsteps = 10             # != 100_000
     # global njump                # number of time steps until temp. jump
@@ -58,7 +58,7 @@ def init():
     global cutoff            # cutoff arbitrary at 2.5 r0
     cutoff = 2.5*sig
     global deltat            # time step (fs)
-    deltat = 2
+    deltat = 0.1
 
     global bond_strength
     bond_strength = 9793        # kb/mol/nm^2
@@ -73,17 +73,17 @@ def init():
     
     # number of particle = n1*n2 distributed on s square lattice
     global n1
-    n1 = 2
+    n1 = 1
     global n2
-    n2 = 2
+    n2 = 1
     global n3
-    n3 = 2
+    n3 = 1
     global N
     N = n1*n2*n3*2
 
     # desired density
     global rho          # rho = N/V
-    rho = 0.25 * sig**(-3) # rho in units of nm^-3 ## Achtung! ist moleküldichte nicht atomdichte!!
+    rho = 0.025 * sig**(-3) # rho in units of nm^-3 ## Achtung! ist moleküldichte nicht atomdichte!!
     global l
     l = (N/rho)**(1/3)
 
