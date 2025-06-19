@@ -26,7 +26,7 @@ def InitializeAtoms():
                 if nz%2 == 0:
                     x0 = (nx+1/2) * settings.deltaxyz
                     y0 = (ny+1/2) * settings.deltaxyz
-                    z0 = (nz+1/2-settings.bond_len/2) * settings.deltaxyz
+                    z0 = (nz//2+1/2) * settings.deltaxyz -settings.bond_len/2
                     
                     vx0 = 0.5 - random.randint(0, 1)
                     vy0 = 0.5 - random.randint(0, 1)
@@ -47,7 +47,7 @@ def InitializeAtoms():
 
                     x0 = (nx+1/2) * settings.deltaxyz
                     y0 = (ny+1/2) * settings.deltaxyz
-                    z0 = (nz+1/2+settings.bond_len/2) * settings.deltaxyz
+                    z0 = (nz//2+1/2) * settings.deltaxyz+settings.bond_len/2
                     
                     vx0 = 0.5 - random.randint(0, 1)
                     vy0 = 0.5 - random.randint(0, 1)
@@ -159,8 +159,10 @@ if __name__ == '__main__':
     x, y, z, _, _, _ = InitializeAtoms()
     # plt.figure(figsize=[10,20])
     plt.scatter(y,z)
+    #plt.scatter(settings.deltaxyz/2, settings.deltaxyz/2)
+    # plt.scatter(settings.deltaxyz, settings.deltaxyz-settings.bond_len/2)
     plt.xlim([0, settings.l])
-    plt.ylim([0, settings.l*2])
+    plt.ylim([0, settings.l])
     plt.show()                  
     
 
