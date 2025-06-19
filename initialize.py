@@ -72,7 +72,7 @@ def InitializeAtoms():
     svy = np.sum(vy)
     svz = np.sum(vz)
     
-    vx -= svx / settings.N 
+    vx -= svx / settings.N  # type: ignore
     vy -= svy / settings.N 
     vz -= svz / settings.N 
     # svx = np.sum(vx)
