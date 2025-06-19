@@ -17,17 +17,39 @@ def save_pressure_results(filename: str, pressure_means: np.ndarray,pressure_std
 
 
 
-def WriteTopology(filename, numb_atoms, molecule_list, numb_types):
-    """Molecule list will be for example for a mixture of 20 atoms of N2 and 10 atoms of CH4
-    numb_atoms = 20*2 + 10*(1 + 4) = 90
-    molecule_list = [2, 1, 4]
-
+def WriteTopology(filename, numb_atoms, atom_types, numb_bonds, x, y, z):
+    """input has to be already have calculated bonds correctly
     """ 
-    for i in range(numb_atoms):
-        for j in range(molecule_list):
+    with open(filename, "w") as f:
+        # block 1 -- number of atoms, atom types and bonds
+        f.write("%i atoms\n" % numb_atoms)  # for atom_ids later
+        f.write("%i atom types\n" % atom_types)     # in our case this should be 1 bc we only have N2
+        f.write("%i bonds\n" % numb_bonds)          # numb_bonds != numb_atoms/2 in our case 
+        f.write("1 bond types\n\n")      # always 1 for us here
 
-            with open(filename, "w") as f:
-                f.writewrite("%i %i %i\n" % (i, j, k))  # atom_id, mol_id, type
+        # Block 2 -- initial box coordinates
+        # f.write("ITEM: BOX BOUNDS \n")
+        f.write("%e %e xlo xhi \n" % (0, settings.l))
+        f.write("%e %e xlo xhi \n" % (0, settings.l))
+        f.write("%e %e xlo xhi \n\n" % (0, settings.l))
+
+        # Block 3 -- Atom Block with atom_id, mol_id, atom_type
+        numb_molecules = numb_atoms//numb_bonds  # rounds to lower value integer
+        charge = 0.0
+        atom_types_arr =  list(range(atom_types)) * numb_molecules
+        f.write("Atoms\n\n") 
+        atom_id = 0 
+        charge = 0.0
+        for mol_id in range(numb_bonds):  # each molecule = 1 bond = 2 atoms
+            for _ in range(2):
+                # third column = 1 always since we only have nitrogen N
+                f.write("%i %i 1 %e %e %e %e\n" % (atom_id, mol_id,
+                                                    charge, x[atom_id], y[atom_id], z[atom_id]))
+                atom_id += 1
+        # Block 4 -- Bonds
+        f.write("\nBonds\n\n") 
+        for bond_id, atom_id_even, atom_id_odd in zip(range(numb_bonds), range(0, numb_atoms, 2), range(1, numb_atoms, 2)):
+            f.write("%i 1 %i %i\n" % (bond_id, atom_id_even, atom_id_odd))
 
 
 def WriteEnergy(fileenergy, itime, epot, ekin, vx2, vy2, vz2, virial, Temp):

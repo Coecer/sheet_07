@@ -49,7 +49,7 @@ def forceLJ_and_Vibration(x, y, z, xlo, xhi, ylo, yhi, zlo, zhi, eps, sig, cutof
             
             r2 = rijx * rijx + rijy * rijy + rijz * rijz
             r = np.sqrt(r2)
-            # Calculate B2 integrand: [exp(-βU(r)) - 1]
+            # Calculate B2 integrand: [exp(-beta*U(r)) - 1]
             if r2 < cutoff * cutoff:
                 sf2 = sig*sig / r2
                 sf6 = sf2 * sf2 * sf2
