@@ -13,7 +13,8 @@ def SimpleSim(name, everyN):
     vx = np.zeros(np.shape(vy))
     vy = np.zeros(np.shape(vy))
     vz = np.zeros(np.shape(vy))
-    fx, fy, fz = force.forceLJ(x, y, z, settings.xlo, settings.xhi, settings.ylo, settings.yhi, settings.zlo,settings.zhi,
+    rlistlist= np.zeros((settings.eqsteps+1, settings.N//2))
+    fx, fy, fz, rlistlist[0] = force.forceLJ(x, y, z, settings.xlo, settings.xhi, settings.ylo, settings.yhi, settings.zlo,settings.zhi,
                                      settings.eps, settings.sig, settings.cutoff, settings.bond_strength, settings.bond_len)
     
 
@@ -21,7 +22,7 @@ def SimpleSim(name, everyN):
     misc.WriteTrajectory3d(fileoutputeq, 0,x,y,z)
 
     for i in tqdm(range(settings.eqsteps)):
-        x, y, z, vx, vy, vz, fx, fy, fz = update.VelocityVerlet(x, y, z, vx, vy, vz, fx, fy, fz, settings.xlo, settings.xhi, settings.ylo, settings.yhi,
+        x, y, z, vx, vy, vz, fx, fy, fz, rlistlist[i+1] = update.VelocityVerlet(x, y, z, vx, vy, vz, fx, fy, fz, settings.xlo, settings.xhi, settings.ylo, settings.yhi,
                                                                     settings.zlo, settings.zhi, settings.eps, settings.sig, 
                                                                     settings.cutoff, settings.deltat, settings.mass, settings.bond_strength, settings.bond_len)
 
@@ -30,6 +31,7 @@ def SimpleSim(name, everyN):
         if i % everyN == 0:
 
             misc.WriteTrajectory3d(fileoutputeq, 0,x,y,z)
+    return rlistlist
 
 
 

@@ -77,7 +77,7 @@ def forceLJ(x, y, z, xlo, xhi, ylo, yhi, zlo, zhi, eps, sig, cutoff, k, bo):
     fy = np.zeros(shape=len(x))
     fz = np.zeros(shape=len(x))
     N = len(x)
-    
+    rlist = np.zeros(N//2)
     epot = 0
 
     for i in range(N-1):
@@ -111,6 +111,7 @@ def forceLJ(x, y, z, xlo, xhi, ylo, yhi, zlo, zhi, eps, sig, cutoff, k, bo):
                 rijz = pbc(z[i], z[j], zlo, zhi)
 
                 r = np.sqrt(rijx**2 + rijy**2 + rijz**2)
+                rlist[j//2]= r
                 delta = r - bo
                 f_mag = -k * delta / r  # normalized force direction
 
@@ -132,7 +133,7 @@ def forceLJ(x, y, z, xlo, xhi, ylo, yhi, zlo, zhi, eps, sig, cutoff, k, bo):
 
 
     
-    return fx, fy, fz # units: kcal/mol/nm, kcal/mol, kcal/mol
+    return fx, fy, fz, rlist # units: kcal/mol/nm, kcal/mol, kcal/mol
   
 @njit  
 def pbc(xi, xj, xlo, xhi):

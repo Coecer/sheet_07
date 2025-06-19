@@ -83,7 +83,7 @@ def init():
 
     # desired density
     global rho          # rho = N/V
-    rho = 0.025 * sig**(-3) # rho in units of nm^-3 ## Achtung! ist moleküldichte nicht atomdichte!!
+    rho = 0.25 * sig**(-3) # rho in units of nm^-3 ## Achtung! ist moleküldichte nicht atomdichte!!
     global l
     l = (N/rho)**(1/3)
 
