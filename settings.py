@@ -9,32 +9,32 @@
 import numpy as np
 from matplotlib import rcParams
 
-def reinitialize():
-    """"Updates all associated values when some
-      initialization values have changed"""
-    deltaxy = (xhi - xlo) / n1
-    deltaz  = (zhi - zlo) / n3
-    beta = 1 / (kb*Tdesired) 
-    rho = 0.05 * sig**(-3) # rho in units of nm^-3
-    l = (N/rho)**(1/3)
-    cutoff = 2.5*sig
-    N = n1*n2*n3
-    xhi = l
-    yhi = l
-    zhi = l
-    dr = sig/30
-    drxy = l/100
+# def reinitialize():  ## I assume we dont need this here?? -c
+#     """"Updates all associated values when some
+#       initialization values have changed"""
+#     deltaxy = (xhi - xlo) / n1
+#     deltaz  = (zhi - zlo) / n3
+#     beta = 1 / (kb*Tdesired) 
+#     rho = 0.05 * sig**(-3) # rho in units of nm^-3
+#     l = (N/rho)**(1/3)
+#     cutoff = 2.5*sig
+#     N = n1*n2*n3
+#     xhi = l
+#     yhi = l
+#     zhi = l
+#     dr = sig/30
+#     drxy = l/100
 
 def init():
     global eqsteps
-    eqsteps = 50_000             # != 50_000
+    eqsteps = 10         # != 50_000
     global nsteps            # number of time step to analyze
-    nsteps = 100_000              # != 100_000
-    global njump                # number of time steps until temp. jump
-    njump = 400              # 40 000 actually 0 in prod run
+    nsteps = 10             # != 100_000
+    # global njump                # number of time steps until temp. jump
+    # njump = 400              # 40 000 actually 0 in prod run
 
-    global nAnalyze
-    nAnalyze = 50
+    # global nAnalyze
+    # nAnalyze = 50
 
     global mass              # mass of the LJ particles (gram/mol)
     mass = 13.93             # changed here to nitrogen mass
@@ -48,8 +48,8 @@ def init():
     beta = 1 / (kb*Tdesired) 
     global tau
     tau = 100                # coupling parameter 
-    global nu
-    nu = 0.01             # collision frequency in (fs)^-1
+    # global nu
+    # nu = 0.01             # collision frequency in (fs)^-1
     global eps               # eps in LJ (kcal/mol)
     eps = 0.297741315                  # (kcal/mol)
     # eps = 0.297741315 * 4.184e-6       # (kcal/mol)
@@ -73,25 +73,25 @@ def init():
     
     # number of particle = n1*n2 distributed on s square lattice
     global n1
-    n1 = 8
+    n1 = 5
     global n2
-    n2 = 8
+    n2 = 5
     global n3
-    n3 = 8
+    n3 = 5
     global N
-    N = n1*n2*n3
+    N = n1*n2*n3*2
 
     # desired density
     global rho          # rho = N/V
-    rho = 0.05 * sig**(-3) # rho in units of nm^-3
+    rho = 0.25 * sig**(-3) # rho in units of nm^-3 ## Achtung! ist moleküldichte nicht atomdichte!!
     global l
     l = (N/rho)**(1/3)
 
-    # for histogramms
-    global dr 
-    dr = sig/30
-    global drxy
-    drxy = l/100
+    # # for histogramms
+    # global dr 
+    # dr = sig/30
+    # global drxy
+    # drxy = l/100
     
 
     # box size
@@ -108,10 +108,10 @@ def init():
     global zhi
     zhi = l
     
-    global deltaxy # lattice parameter to setup the initial configuration on a lattice
-    deltaxy = (xhi - xlo)/n1
-    global deltaz
-    deltaz = (zhi - zlo)/n3
+    global deltaxyz # lattice parameter to setup the initial configuration on a lattice
+    deltaxyz = (xhi - xlo)/n1
+    # global deltaz
+    # deltaz = (zhi - zlo)/n3
     
     #rescaling of temperature
     global Trescale

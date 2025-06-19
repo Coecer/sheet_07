@@ -22,26 +22,48 @@ def InitializeAtoms():
         ny=0
         while ny < settings.n2:
             nz=0
-            while nz < settings.n3:
-                x0 = (nx+1/2) * settings.deltaxy
-                y0 = (ny+1/2) * settings.deltaxy
-                z0 = (nz+1/2) * settings.deltaz
-                
-                vx0 = 0.5 - random.randint(0, 1)
-                vy0 = 0.5 - random.randint(0, 1)
-                vz0 = 0.5 - random.randint(0, 1)
+            while nz < settings.n3*2:  # here we want to partilces
+                if nz%2 == 0:
+                    x0 = (nx+1/2) * settings.deltaxyz
+                    y0 = (ny+1/2) * settings.deltaxyz
+                    z0 = (nz+1/2-settings.bond_len/2) * settings.deltaxyz
                     
+                    vx0 = 0.5 - random.randint(0, 1)
+                    vy0 = 0.5 - random.randint(0, 1)
+                    vz0 = 0.5 - random.randint(0, 1)
+                        
+                        
+                    x[n] = x0
+                    y[n] = y0
+                    z[n] = z0
                     
-                x[n] = x0
-                y[n] = y0
-                z[n] = z0
-                
-                vx[n] = vx0
-                vy[n] = vy0
-                vz[n] = vz0
-                n += 1
+                    vx[n] = vx0
+                    vy[n] = vy0
+                    vz[n] = vz0
+                    n += 1
+                        
+                    nz += 1
+                else:
+
+                    x0 = (nx+1/2) * settings.deltaxyz
+                    y0 = (ny+1/2) * settings.deltaxyz
+                    z0 = (nz+1/2+settings.bond_len/2) * settings.deltaxyz
                     
-                nz += 1
+                    vx0 = 0.5 - random.randint(0, 1)
+                    vy0 = 0.5 - random.randint(0, 1)
+                    vz0 = 0.5 - random.randint(0, 1)
+                        
+                        
+                    x[n] = x0
+                    y[n] = y0
+                    z[n] = z0
+                    
+                    vx[n] = vx0
+                    vy[n] = vy0
+                    vz[n] = vz0
+                    n += 1
+                        
+                    nz += 1
             ny +=1
         nx += 1
         
@@ -131,11 +153,12 @@ def andersen_thermostat(vx, vy, vz, T0, nu):
 if __name__ == '__main__':
     settings.init()
     #print(InitializeAtoms()[0])
-    print(settings.deltaxy,settings.deltaz)
+    print(settings.deltaxyz)
+    print(settings.bond_len)
     import matplotlib.pyplot as plt
     x, y, z, _, _, _ = InitializeAtoms()
     # plt.figure(figsize=[10,20])
-    plt.scatter(x,z)
+    plt.scatter(y,z)
     plt.xlim([0, settings.l])
     plt.ylim([0, settings.l*2])
     plt.show()                  
