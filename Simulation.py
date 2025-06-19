@@ -33,6 +33,32 @@ def SimpleSim(name, everyN):
             misc.WriteTrajectory3d(fileoutputeq, 0,x,y,z)
     return rlistlist
 
+def SimulationSheet7(name, everyN):
+    settings.init()
+    x, y, z, vx, vy, vz = initialize.InitializeAtoms()
+    vx = np.zeros(np.shape(vy))
+    vy = np.zeros(np.shape(vy))
+    vz = np.zeros(np.shape(vy))
+    rlistlist= np.zeros((settings.eqsteps+1, settings.N//2)) # type: ignore
+    fx, fy, fz, rlistlist[0] = force.forceLJ(x, y, z, settings.xlo, settings.xhi, settings.ylo, settings.yhi, settings.zlo,settings.zhi,
+                                     settings.eps, settings.sig, settings.cutoff, settings.bond_strength, settings.bond_len)
+    
+
+    fileoutputeq = open(name+ str(everyN)+ '_berendsen_eq', "w")
+    misc.WriteTrajectory3d(fileoutputeq, 0,x,y,z)
+
+    for i in tqdm(range(settings.eqsteps)):
+        x, y, z, vx, vy, vz, fx, fy, fz, rlistlist[i+1] = update.VelocityVerlet(x, y, z, vx, vy, vz, fx, fy, fz, settings.xlo, settings.xhi, settings.ylo, settings.yhi,
+                                                                    settings.zlo, settings.zhi, settings.eps, settings.sig, 
+                                                                    settings.cutoff, settings.deltat, settings.mass, settings.bond_strength, settings.bond_len)
+
+
+        # save shit every n
+        if i % everyN == 0:
+
+            misc.WriteTrajectory3d(fileoutputeq, 0,x,y,z)
+    return rlistlist
+
 
 
 

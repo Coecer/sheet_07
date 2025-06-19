@@ -100,5 +100,9 @@ def WriteTrajectory3d(fileoutput, itime, x, y, z):
     
     for i in range(0, settings.N):
         fileoutput.write("%i %i %e %e %e \n" % (i, i, x[i] % settings.l, y[i] % settings.l, z[i] % (settings.l)))
+
+def WritePos(filepos, itime, x, y, z):
+    
+    filepos.write("%i %e %e %e %e %e %e %e\n" % (itime, x,y,z))
     
     
