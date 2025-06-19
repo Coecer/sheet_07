@@ -14,7 +14,7 @@ import numpy as np
 from numba import njit, prange
 
 @njit(parallel=True)
-def VelocityVerlet(x, y, z, vx, vy, vz, fx, fy, fz, xlo, xhi, ylo, yhi, zlo, zhi, eps, sigma, cutoff, deltat, mass, beta):
+def VelocityVerlet(x, y, z, vx, vy, vz, fx, fy, fz, xlo, xhi, ylo, yhi, zlo, zhi, eps, sigma, cutoff, deltat, mass, k, bo):
 
     # conversion factor
     fx0 = np.zeros(shape=len(x))
@@ -35,7 +35,7 @@ def VelocityVerlet(x, y, z, vx, vy, vz, fx, fy, fz, xlo, xhi, ylo, yhi, zlo, zhi
     fy0 = fy         # tested it also only with fy and it still worked
     fz0 = fz         # tested it also only with fz and it still worked
     # update acceleration at t+dt
-    fx, fy, fz, epot, virial = force.forceLJ(x, y, z, xlo, xhi, ylo, yhi, zlo, zhi, eps, sigma, cutoff, beta)
+    fx, fy, fz, rlist= force.forceLJ(x, y, z, xlo, xhi, ylo, yhi, zlo, zhi, eps, sigma, cutoff, k, bo)
 
     # conversion from [f_i/mass] = fs/nm * kcal/g --> 4.184*10^15 J/kg = 4.184*10^15 m/s^2 = 4.184e-6 nm/fs^2
     # conv_fac_ToMultiplyTo_vel = 4.184e-6               
@@ -45,7 +45,7 @@ def VelocityVerlet(x, y, z, vx, vy, vz, fx, fy, fz, xlo, xhi, ylo, yhi, zlo, zhi
         vy[i] += 4.184e-6 * 0.5 * dt * (fy[i] + fy0[i]) / mass
         vz[i] += 4.184e-6 * 0.5 * dt * (fz[i] + fz0[i]) / mass
     
-    return x, y, z, vx, vy, vz, fx, fy, fz, epot # units: nm, nm/fs, kcal/mol/nm, kcal/mol
+    return x, y, z, vx, vy, vz, fx, fy, fz, rlist # units: nm, nm/fs, kcal/mol/nm, kcal/mol
 
  
 @njit(parallel=True)
