@@ -13,7 +13,7 @@ def SimpleSim(name, everyN):
     vx = np.zeros(np.shape(vy))
     vy = np.zeros(np.shape(vy))
     vz = np.zeros(np.shape(vy))
-    rlistlist= np.zeros((settings.eqsteps+1, settings.N//2))
+    rlistlist= np.zeros((settings.eqsteps+1, settings.N//2)) # type: ignore
     fx, fy, fz, rlistlist[0] = force.forceLJ(x, y, z, settings.xlo, settings.xhi, settings.ylo, settings.yhi, settings.zlo,settings.zhi,
                                      settings.eps, settings.sig, settings.cutoff, settings.bond_strength, settings.bond_len)
     
