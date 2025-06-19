@@ -2,10 +2,6 @@ import settings
 import numpy as np
 from numba import njit, prange
 
-
-#@njit
-
-
 # @njit(parallel=True)
 # def compute_B2_LJ(eps, sig, beta, r_max=1000, dr=0.001):
 #     """Compute B2 for a Lennard-Jones potential by direct integration."""
@@ -28,45 +24,6 @@ from numba import njit, prange
 #     Not taking into accoutn B3. """
     
 #     return rho * kB * T_desired * (1.0 + B2 * rho)
-
-
-
-# @njit(parallel=True)
-# def forceLJ_and_Vibration(x, y, z, xlo, xhi, ylo, yhi, zlo, zhi, eps, sig, cutoff):
-        
-#     fx = np.zeros(shape=len(x))
-#     fy = np.zeros(shape=len(x))
-#     fz = np.zeros(shape=len(x))
-#     N = len(x)
-    
-#     epot = 0
-
-#     for i in range(N-1):
-#         for j in range(i+1, N):
-#             rijx = pbc(x[i], x[j], xlo, xhi)
-#             rijy = pbc(y[i], y[j], ylo, yhi)
-#             rijz = pbc(z[i], z[j], zlo, zhi)
-            
-#             r2 = rijx * rijx + rijy * rijy + rijz * rijz
-#             r = np.sqrt(r2)
-#             # Calculate B2 integrand: [exp(-βU(r)) - 1]
-#             if r2 < cutoff * cutoff:
-#                 sf2 = sig*sig / r2
-#                 sf6 = sf2 * sf2 * sf2
-#                 epot += 4.*eps*sf6*(sf6 - 1.)   # kcal/mol
-                
-#                 # ff = 48.*eps*sf6*(sf6 - 0.5)/r2 # kcal/mol/nm^2
-#                 f_mag = 48*eps*sf6*(sf6 - 0.5) / r   # kcal/(mol·nm)
-
-#                 # apply to components 
-#                 fx[i] -= f_mag * (rijx/r) # kcal/nm/mol
-#                 fy[i] -= f_mag * (rijy/r) # kcal/nm/mol
-#                 fz[i] -= f_mag * (rijz/r) # kcal/nm/mol
-#                 fx[j] += f_mag * (rijx/r) # kcal/nm/mol
-#                 fy[j] += f_mag * (rijy/r) # kcal/nm/mol
-#                 fz[j] += f_mag * (rijz/r) # kcal/nm/mol           
-
-#     return fx, fy, fz, epot # units: kcal/mol/nm, kcal/mol, kcal/mol
 
 
 #### unit of the force: (kcal/mole)/nm

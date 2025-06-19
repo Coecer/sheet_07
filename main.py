@@ -11,7 +11,7 @@ import sys
 import time
 import misc
 from numba import njit, prange
-from Simulation import SimulationSheet7a
+from Simulation import Sim_testing_Topology
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -27,7 +27,7 @@ def main(subtask):
     if subtask == "a":
         print('a')
 
-        SimulationSheet7a(True, '7a_', thermostat_type='berendsen')
+        Sim_testing_Topology()
 
 if __name__ == "__main__":    
     main(subtask="a")

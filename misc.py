@@ -17,11 +17,12 @@ def save_pressure_results(filename: str, pressure_means: np.ndarray,pressure_std
 
 
 
-def WriteTopology(filename, numb_atoms, atom_types, numb_bonds, x, y, z):
+def WriteTopology(filename, x, y, z, numb_atoms, atom_types, numb_bonds):
     """input has to be already have calculated bonds correctly
     """ 
     with open(filename, "w") as f:
         # block 1 -- number of atoms, atom types and bonds
+        f.write("lammps data file\n")
         f.write("%i atoms\n" % numb_atoms)  # for atom_ids later
         f.write("%i atom types\n" % atom_types)     # in our case this should be 1 bc we only have N2
         f.write("%i bonds\n" % numb_bonds)          # numb_bonds != numb_atoms/2 in our case 
@@ -30,8 +31,8 @@ def WriteTopology(filename, numb_atoms, atom_types, numb_bonds, x, y, z):
         # Block 2 -- initial box coordinates
         # f.write("ITEM: BOX BOUNDS \n")
         f.write("%e %e xlo xhi \n" % (0, settings.l))
-        f.write("%e %e xlo xhi \n" % (0, settings.l))
-        f.write("%e %e xlo xhi \n\n" % (0, settings.l))
+        f.write("%e %e ylo yhi \n" % (0, settings.l))
+        f.write("%e %e zlo zhi \n\n" % (0, settings.l))
 
         # Block 3 -- Atom Block with atom_id, mol_id, atom_type
         numb_molecules = numb_atoms//numb_bonds  # rounds to lower value integer

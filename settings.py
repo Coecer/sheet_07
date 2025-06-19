@@ -73,11 +73,11 @@ def init():
     
     # number of particle = n1*n2 distributed on s square lattice
     global n1
-    n1 = 1
+    n1 = 5
     global n2
-    n2 = 1
+    n2 = 5
     global n3
-    n3 = 1
+    n3 = 5
     global N
     N = n1*n2*n3*2
 

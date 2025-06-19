@@ -36,7 +36,12 @@ def SimpleSim(name, everyN):
 
 
 
+def Sim_testing_Topology():
+    settings.init()
+    x, y, z, vx, vy, vz = initialize.InitializeAtoms()
 
+    topo_filename = "test_topology.txt"
+    misc.WriteTopology(topo_filename, x, y, z, numb_atoms=250, atom_types=1, numb_bonds=125)
 
 
 
